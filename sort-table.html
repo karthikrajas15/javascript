@@ -1,0 +1,132 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>GeeksforGeeks</title> 
+    <style> 
+        table { 
+            border-spacing: 0; 
+            width: 80%; 
+            border: 1px solid #dddd; 
+        } 
+          
+        th, 
+        td { 
+            text-align: left; 
+            padding: 15px; 
+        } 
+          
+        tr:nth-child(even) { 
+            background-color: #008000 
+        } 
+    </style> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head> 
+  
+<body> 
+  
+    <center> 
+        <h1 style="color:green">GeeksforGeeks</h1> 
+        <p> 
+            <button onclick="sortTable(this)">Sort</button> 
+        </p> 
+  
+        <table id="table"> 
+            <tr> 
+                <th>Country<span  data-column="country" onclick="sortTable(this, 'sort')"><span style='font-size:20px; color:#DADADA; float: right;' class="sort_asc">&uarr;</span><span style='font-size:20px; color:#DADADA; float: right;' class="sort_desc">&darr;</span></span></th> 
+                <th>Capital<span data-column="capital" onclick="sortTable(this, 'sort')"><span style='font-size:20px; color:#DADADA; float: right;' class="sort_asc">&uarr;</span><span style='font-size:20px; color:#DADADA; float: right;' class="sort_desc">&darr;</span></span></th> 
+                <th>Number<span data-column="number" onclick="sortTable(this, 'sort')"><span style='font-size:20px; color:#DADADA; float: right;' class="sort_asc">&uarr;</span><span style='font-size:20px; color:#DADADA; float: right;' class="sort_desc">&darr;</span></span></th> 
+            </tr> 
+            <tr> 
+                <td class="country">United states of America</td> 
+                <td class="capital">Washington DC</td> 
+                <td class="number">4</td> 
+            </tr> 
+            <tr> 
+                <td class="country">India</td> 
+                <td class="capital">New Delhi</td> 
+                <td class="number">1</td> 
+            </tr> 
+            <tr> 
+                <td class="country">Australia</td> 
+                <td class="capital">Canberra</td> 
+                <td class="number">2</td> 
+            </tr> 
+            <tr> 
+                <td class="country">Germany</td> 
+                <td class="capital">Berlin</td> 
+                <td class="number">3</td> 
+            </tr> 
+  
+        </table> 
+  
+        <script> 
+            // JavaScript Program to illustrate 
+            // Table sort on a button click 
+            function sortTable(ele, sort_type) { 
+                var table, i, x, y; 
+                table = document.getElementById("table"); 
+                var switching = true; 
+                var header = $(ele).data('column')
+                if(sort_type == 'sort_asc'){
+                    $('.sort_asc').css('color', '#DADADA');
+                    $('.sort_desc').css('color', '#DADADA');
+                    $(ele).children('span .sort_desc').css('color', 'black');
+                    $(ele).attr('onclick', "sortTable(this, 'sort_desc')")
+                }
+                else{
+                    $('.sort_asc').css('color', '#DADADA');
+                    $('.sort_desc').css('color', '#DADADA');
+                    $(ele).children('span .sort_asc').css('color', 'black');
+                    $(ele).attr('onclick', "sortTable(this, 'sort_asc')")
+                } 
+  
+                // Run loop until no switching is needed 
+                while (switching) { 
+                    switching = false; 
+                    var rows = table.rows; 
+  
+                    // Loop to go through all rows 
+                    for (i = 1; i < (rows.length - 1); i++) { 
+                        var Switch = false; 
+  
+                        // Fetch 2 elements that need to be compared 
+                        x = rows[i].getElementsByClassName(header)[0]; 
+                        y = rows[i + 1].getElementsByClassName(header)[0]; 
+                        
+                        if (sort_type == 'sort_asc'){
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) 
+                            { 
+  
+                                // If yes, mark Switch as needed and break loop 
+                                Switch = true; 
+                                break; 
+                             } 
+
+                        }
+                        else{
+                            // Check if 2 rows need to be switched 
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) 
+                                { 
+    
+                                // If yes, mark Switch as needed and break loop 
+                                Switch = true; 
+                                break; 
+                            } 
+
+                        }
+                        
+                    } 
+                    if (Switch) { 
+                        // Function to switch rows and mark switch as completed 
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]); 
+                        switching = true; 
+                    } 
+                } 
+            } 
+
+        </script> 
+    </center> 
+</body> 
+  
+</html> 
